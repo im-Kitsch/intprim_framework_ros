@@ -45,7 +45,7 @@ Please select which scenario you would like to work with:
 ```
 
 3. Open up the graphical dashboard to train a BIP model. To do so, press "d" on the main menu of the Interaction Application CLI:
-![](../media/dashboard.png)
+![](./../../media/dashboard.png)
 
 4. Press "Select Demonstrations", select the desired csv files for training, and then press "Open". Select all of the files that appear in the window by clicking them, and then select "Train Demonstration(s)" followed by "Export Primitive". Lastly, we must determine the appropriate observation noise, so with the files still selected press "Export Observation Noise" and select "Ok". The primitive and observation noise should now be in the directory specified by the parameter files. You are now finished training the model.
  
