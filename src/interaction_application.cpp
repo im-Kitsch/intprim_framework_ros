@@ -6,6 +6,7 @@
 #ifdef IRL_ROBOTS_AVAILABLE
     #include "devices/lbr4.h"
     #include "devices/ur5.h"
+    #include "devices/tiago.h"
 #endif
 
 #include <cmath>
@@ -187,6 +188,18 @@ InteractionApplication::DeviceInterfaceTypes InteractionApplication::string_to_d
     {
         new_device = InteractionApplication::DeviceInterfaceTypes::lbr4;
     }
+    else if(device_name == "tiago")
+    {
+        new_device = InteractionApplication::DeviceInterfaceTypes::tiago;
+    }
+    else if(device_name == "tiago_c")
+    {
+        new_device = InteractionApplication::DeviceInterfaceTypes::tiago_c;
+    }
+    else if(device_name == "tiago_l")
+    {
+        new_device = InteractionApplication::DeviceInterfaceTypes::tiago_l;
+    }    
 
     return new_device;
 }
@@ -207,6 +220,15 @@ std::unique_ptr<DeviceInterface> InteractionApplication::create_device(DeviceInt
             device_interface = create_robot(interface_type);
             break;
         case InteractionApplication::DeviceInterfaceTypes::lbr4:
+            device_interface = create_robot(interface_type);
+            break;
+        case InteractionApplication::DeviceInterfaceTypes::tiago:
+            device_interface = create_robot(interface_type);
+            break;
+        case InteractionApplication::DeviceInterfaceTypes::tiago_l:
+            device_interface = create_robot(interface_type);
+            break;
+        case InteractionApplication::DeviceInterfaceTypes::tiago_c:
             device_interface = create_robot(interface_type);
             break;
     }
@@ -246,6 +268,27 @@ std::unique_ptr<RobotInterface> InteractionApplication::create_robot(DeviceInter
                 robot_interface = std::unique_ptr<LBR4Interface>(new LBR4Interface(*m_handle));
             #else
                 throw std::runtime_error("Experiment uses LBR4Interface but IRL robots unavailable.");
+            #endif
+            break;
+        case InteractionApplication::DeviceInterfaceTypes::tiago:
+            #ifdef IRL_ROBOTS_AVAILABLE
+            robot_interface = std::unique_ptr<TiagoInterface>(new TiagoInterface(*m_handle, "regular"));
+            #else
+            throw std::runtime_error("Experiment uses TiagoInterface but IRL robots unavailable.");
+            #endif
+            break;
+        case InteractionApplication::DeviceInterfaceTypes::tiago_l:
+            #ifdef IRL_ROBOTS_AVAILABLE
+                robot_interface = std::unique_ptr<TiagoInterface>(new TiagoInterface(*m_handle, "observe_sim"));
+            #else
+                throw std::runtime_error("Experiment uses TiagoLInterface but IRL robots unavailable.");
+            #endif
+            break;
+        case InteractionApplication::DeviceInterfaceTypes::tiago_c:
+            #ifdef IRL_ROBOTS_AVAILABLE
+                robot_interface = std::unique_ptr<TiagoInterface>(new TiagoInterface(*m_handle, "control_sim"));
+            #else
+                throw std::runtime_error("Experiment uses TiagoCInterface but IRL robots unavailable.");
             #endif
             break;
     }

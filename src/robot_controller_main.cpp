@@ -5,6 +5,7 @@
 #ifdef IRL_ROBOTS_AVAILABLE
     #include "devices/ur5.h"
     #include "devices/lbr4.h"
+    #include "devices/tiago.h"
 #endif
 
 

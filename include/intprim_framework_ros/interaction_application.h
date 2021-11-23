@@ -55,7 +55,10 @@ private:
         lbr4,
         ur5,
         ur5l,
-        ur5c
+        ur5c,
+        tiago,
+        tiago_l,
+        tiago_c
     };
 
     enum end_demo_signal

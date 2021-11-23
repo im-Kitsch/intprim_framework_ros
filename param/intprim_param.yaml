@@ -64,12 +64,13 @@ bip:
     scale_observations: false # Perform basis standardization
     cyclical: false # If true, the phase will roll back to 0 once it is >= 1.
     debug: false
-    import_data: "<path>/trained_bip.bip"
-    observation_noise: "<path>/observation_noise.noise"
-    mip_test_directory: "<path_to_csvs>"
-    debug_directory: "<path>/debug"
+    import_data: "/home/yuan/Downloads/IntPrim/handwritten/trained_bip.bip"
+    observation_noise: "/home/yuan/Downloads/IntPrim/handwritten/observation_noise.noise"
+    mip_test_directory: "/home/yuan/catkin_ws/src/intprim_framework_ros/docs/tutorials/tutorial_examples/handwritten/csvs"
+    debug_directory: "/home/yuan/Downloads/IntPrim/handwritten/debug"
     config_name: "Config1"
     primary: false
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
 -   id: 1
     name: "CoppeliaSim"
     modalities:
@@ -155,9 +156,106 @@ bip:
     scale_observations: false # Perform basis standardization
     cyclical: false # If true, the phase will roll back to 0 once it is >= 1.
     debug: false
-    import_data: "<path_to_trained_model_dir>/trained_bip.bip"
-    observation_noise: "<path_to_observation_noise_dir>/observation_noise.noise"
-    mip_test_directory: "<path_to_recorded_rosbags_dir>"
-    debug_directory: "<path_to_debug_dir>"
+    import_data: "/home/yuan/Downloads/IntPrim/CoppeliaSim/trained_bip.bip"
+    observation_noise: "/home/yuan/Downloads/IntPrim/CoppeliaSim/observation_noise.noise"
+    mip_test_directory: "/home/yuan/catkin_ws/src/intprim_framework_ros/docs/tutorials/tutorial_examples/coppelia/csvs"
+    debug_directory: "/home/yuan/Downloads/IntPrim/CoppeliaSim/debug"
     config_name: "Config2"
+    primary: false
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+-   id: 2
+    name: "Tiago"
+    modalities:
+    -   name: "tiago_l"
+        indices: [0, 7]
+        dof_names: [
+            "tiago_l Pos 1",
+            "tiago_l Pos 2",
+            "tiago_l Pos 3",
+            "tiago_l Pos 4",
+            "tiago_l Pos 5",
+            "tiago_l Pos 6",
+            "tiago_l Pos 7"
+        ]
+        basis_model:
+            type: "Gaussian"
+            degree: 7
+            scale: 0.07
+            start_phase: 0.0
+            end_phase: 1.0
+        scaling_groups : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+        noise_bias: 0.0 # Added to the measurement noise for each DoF of this modality.
+        generate: false
+        active: true
+        active_from: 0.0 # Each DoF will only be active when the estimated phase is between from/until. When inactive, it will not be perturbed by noise and the measurement noise will be increased.
+        active_until: 1.01
+    #--------------------------------------------------------------------------
+    -   name: "tiago_c"
+        indices: [7, 14]
+        dof_names: [
+            "tiago_c Pos 1",
+            "tiago_c Pos 2",
+            "tiago_c Pos 3",
+            "tiago_c Pos 4",
+            "tiago_c Pos 5",
+            "tiago_c Pos 6",
+            "tiago_c Pos 7"
+        ]
+        basis_model:
+            type: "Gaussian"
+            degree: 7
+            scale: 0.07
+            start_phase: 0.0
+            end_phase: 1.0
+        scaling_groups : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+        noise_bias: 0.0 # Added to the measurement noise for each DoF of this modality.
+        generate: true
+        active: true
+        active_from: 0.0 # Each DoF will only be active when the estimated phase is between from/until. When inactive, it will not be perturbed by noise and the measurement noise will be increased.
+        active_until: 1.01
+    #--------------------------------------------------------------------------
+    filter:
+        name: "enkf"
+        ensemble_size: 100 # Max number of demonstrations!
+        initial_phase: 0.0
+        initial_phase_variance: 0.01
+        initial_phase_velocity: 0.003028400493295413
+        initial_phase_velocity_variance: 2.9307595907134784e-07
+        initial_phase_acceleration: 0.0001
+        initial_phase_acceleration_variance: 4.012610510198e-10
+        process_variance: 1e-7
+        time_delta: 1.0
+        measurement_noise_bias: 10000.0
+        system_order: 1
+    prior:
+        init_with_demonstrations: true # If this is true, the ensemble_size is upper bounded by the number of demonstrations available.
+        reg_covar: 1e-6
+        num_components: 1
+    num_samples: 40
+    phase_lookahead: 0.00
+    scale_observations: false # Perform basis standardization
+    cyclical: false # If true, the phase will roll back to 0 once it is >= 1.
+    debug: false
+    import_data: "/home/yuan/Downloads/IntPrim/Tiago/trained_bip.bip"
+    observation_noise: "/home/yuan/Downloads/IntPrim/Tiago/observation_noise.noise"
+    mip_test_directory: "/home/yuan/Downloads/IntPrim/Tiago/test_csvs"
+    debug_directory: "/home/yuan/Downloads/IntPrim/Tiago/debug"
+    config_name: "Config3"
     primary: true

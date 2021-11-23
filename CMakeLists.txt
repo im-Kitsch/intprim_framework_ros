@@ -15,7 +15,7 @@ find_package(catkin OPTIONAL_COMPONENTS
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  rospy
+  rospy 
   std_msgs
   rosgraph_msgs
   message_generation
@@ -129,11 +129,13 @@ if(irl_robot_drivers_FOUND)
     list(APPEND CORE_SRC
         src/devices/lbr4.cpp
         src/devices/ur5.cpp
+        src/devices/tiago.cpp
     )
 
     list(APPEND CONTROLLER_SRC
         src/devices/lbr4.cpp
         src/devices/ur5.cpp
+        src/devices/tiago.cpp
     )
 endif()
 

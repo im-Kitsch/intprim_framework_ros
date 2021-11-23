@@ -20,3 +20,14 @@ experiments:
     -   "ur5l" # lead
     -   "ur5c" # control
     controller: "ur5c" # "none"
+
+-   id: 2
+    name: "Tiago"
+    timeout: 160000 # In seconds
+    sub_actions:
+    -   prefix: "tiago"
+        message: "UR5's will touch a random point in between them..."
+    devices:
+    -   "tiago_l" # lead
+    -   "tiago_c" # control
+    controller: "tiago_c" # "none"
